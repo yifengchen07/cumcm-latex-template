@@ -1,0 +1,131 @@
+\documentclass[12pt, a4paper]{article}
+
+% ==================== 中文支持 ====================
+\usepackage[UTF8]{ctex}
+
+% ==================== 页面设置 ====================
+\usepackage{geometry}
+\geometry{left=2.5cm, right=2.5cm, top=2.54cm, bottom=2.54cm}
+
+% ==================== 数学公式 ====================
+\usepackage{amsmath, amssymb}
+
+% ==================== 表格相关 ====================
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{tabularx}
+% 定义居中且可自动换行的列类型
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+% ==================== 图片与浮动体 ====================
+\usepackage{graphicx}
+\usepackage{float}
+
+% ==================== 代码与颜色 ====================
+\usepackage{listings}
+\usepackage{xcolor}
+
+% ==================== 标题格式定制 ====================
+\usepackage{titlesec}
+% 一级标题居中
+\titleformat{\section}{\centering\Large\bfseries}{\thesection}{1em}{}
+% 二级标题左对齐
+\titleformat{\subsection}{\flushleft\large\bfseries}{\thesubsection}{1em}{}
+% 三级标题左对齐
+\titleformat{\subsubsection}{\flushleft\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+
+
+\begin{document}
+
+% --- 论文题目 (居中) [cite: 1, 16] ---
+\begin{center}
+    \LARGE \bfseries 基于 XXX 模型的 XXX 问题研究
+\end{center}
+
+% ==================== 摘要 ====================
+\section*{摘要}
+\addcontentsline{toc}{section}{摘要}
+
+（在此处填写摘要内容）
+
+\vspace{1em}
+\noindent \textbf{关键词：} 
+
+\newpage
+
+% ==================== 目录 ====================
+\tableofcontents
+\newpage
+
+% ==================== 正文开始 ====================
+% --- 一、问题重述 (居中) ---
+\section{问题重述}
+该部分主要是用自己的话对问题进行总结，\textbf{关键是改写} 。字数在半页到一页左右 。
+
+% --- 二、问题分析 (居中)  ---
+\section{问题分析}
+问题分析起着承上启下的作用 。
+
+\subsection{问题一的分析} % 二级标题顶格
+分析过程要简明扼要，不需要放结论 。建议使用流程图列出思维过程 。
+
+% --- 三、模型假设 (居中) ---
+\section{模型假设}
+\begin{itemize}
+    \item 假设题目给出的测量数据准确，无异常值 。
+    \item 整个系统温度恒定 。
+\end{itemize}
+
+% --- 四、符号说明 (居中)  ---
+\section{符号说明}
+一般以三线表形式给出，包括符号、含义和单位 。建议用希腊字母 。
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccc}
+        \toprule
+        变量 & 说明 & 量纲 \\
+        \midrule
+        $t$ & 时间 & $s$  \\
+        $a_{ij}$ & 在$(i,j)$位置的人数 & 人  \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% --- 五、模型建立与求解 (居中) ---
+\section{模型建立与求解}
+\subsection{数据预处理}
+\subsection{描述性统计}
+\subsection{问题一模型的建立与求解}
+\subsubsection{模型选择与建立}
+解释清楚数据特点是什么样的，为什么要选择这个模型，这个模型是解决什么问题的，
+以及自己模型的推导过程
+\subsubsection{模型的求解}
+讲解你模型求解算法是什么，这个算法的优势是什么
+\subsubsection{模型结果}
+
+
+
+% --- 六、模型检验 (居中)  ---
+\section{模型检验}
+包括稳定性分析、敏感性分析及误差分析。
+
+% --- 七、模型优缺点评价 (居中)  ---
+\section{模型优缺点评价}
+优点说充分，缺点不回避 。
+
+
+% ==================== 参考文献与附录 ====================
+\newpage
+\begin{thebibliography}{99}
+% 在此处添加参考文献条目
+\end{thebibliography}
+
+\newpage
+\section*{附录}
+\addcontentsline{toc}{section}{附录}
+（在此处添加附录内容，如代码、表格等）
+
+\end{document}
