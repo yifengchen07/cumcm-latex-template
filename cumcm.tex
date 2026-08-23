@@ -1,131 +1,164 @@
-\documentclass[12pt, a4paper]{article}
+% !TeX program = xelatex
+% 2026 CUMCM 电子版论文示例：电子版第一页必须是摘要专用页。
+% 编译：latexmk -xelatex cumcm.tex
+\documentclass[zihao=-4,a4paper,UTF8,fontset=none]{ctexart}
 
-% ==================== 中文支持 ====================
-\usepackage[UTF8]{ctex}
+% template
+\usepackage{cumcm2026}
 
-% ==================== 页面设置 ====================
-\usepackage{geometry}
-\geometry{left=2.5cm, right=2.5cm, top=2.54cm, bottom=2.54cm}
-
-% ==================== 数学公式 ====================
-\usepackage{amsmath, amssymb}
-
-% ==================== 表格相关 ====================
-\usepackage{booktabs}
-\usepackage{multirow}
-\usepackage{array}
-\usepackage{tabularx}
-% 定义居中且可自动换行的列类型
-\newcolumntype{Y}{>{\centering\arraybackslash}X}
-
-% ==================== 图片与浮动体 ====================
-\usepackage{graphicx}
-\usepackage{float}
-
-% ==================== 代码与颜色 ====================
-\usepackage{listings}
-\usepackage{xcolor}
-
-% ==================== 标题格式定制 ====================
-\usepackage{titlesec}
-% 一级标题居中
-\titleformat{\section}{\centering\Large\bfseries}{\thesection}{1em}{}
-% 二级标题左对齐
-\titleformat{\subsection}{\flushleft\large\bfseries}{\thesubsection}{1em}{}
-% 三级标题左对齐
-\titleformat{\subsubsection}{\flushleft\normalsize\bfseries}{\thesubsubsection}{1em}{}
+% set English and Number font
+\setmainfont{TimesNewRoman.ttf}[
+  Path=fonts/,
+  BoldFont=TimesNewRomanBold.ttf,
+  ItalicFont=TimesNewRomanItalic.ttf,
+  BoldItalicFont=TimesNewRomanBoldItalic.ttf
+]
 
 
+
+% set Chinese font
+\setCJKmainfont[
+  Path=fonts/,
+  BoldFont=SimHei.ttf
+]{SimSun.ttc}
+
+\setCJKfamilyfont{zhsong}[
+  Path=fonts/
+]{SimSun.ttc}
+
+\setCJKfamilyfont{zhhei}[
+  Path=fonts/
+]{SimHei.ttf}
+
+\providecommand{\songti}{}
+\providecommand{\heiti}{}
+\renewcommand{\songti}{\CJKfamily{zhsong}}
+\renewcommand{\heiti}{\CJKfamily{zhhei}}
+
+
+
+
+
+%--------------------------------------------------------------------
+%--------------------------------------------------------------------
+%以上不要动
+%标题与关键词（代码很特殊的写在document环境之前）
+\title{基于多目标优化的城市应急物资调度研究}
+\newcommand{\keywords}{应急调度；多目标优化；鲁棒性；敏感性分析}
 
 \begin{document}
 
-% --- 论文题目 (居中) [cite: 1, 16] ---
-\begin{center}
-    \LARGE \bfseries 基于 XXX 模型的 XXX 问题研究
-\end{center}
+% 2026 电子提交版不得包含承诺书和编号专用页；第一页直接为摘要页。
+\maketitle
 
-% ==================== 摘要 ====================
-\section*{摘要}
-\addcontentsline{toc}{section}{摘要}
+\begin{cumcmabstract}
+针对突发事件中需求不确定、道路通行能力动态变化和多配送中心协同困难的问题，本文构建兼顾响应时间、运输成本与服务公平性的多目标应急物资调度模型。
 
-（在此处填写摘要内容）
+首先，对需求、库存和路网数据进行一致性校验与异常值处理，并用区间参数描述需求波动。其次，将车辆容量、物资守恒、时间窗和道路容量写入约束，以加权切比雪夫方法获得帕累托折中解。再次，通过滚动时域策略更新需求预测和路径决策。算例结果表明，该方法能够在满足关键需求点最低保障率的同时控制总成本；敏感性分析用于识别需求波动和道路容量对方案稳定性的影响。
 
-\vspace{1em}
-\noindent \textbf{关键词：} 
+最后，从数据误差、参数扰动和极端情景三个层面检验模型，并讨论模型的适用边界。本文方法可为同类多源供给、动态需求的资源配置问题提供可复用的决策框架。
 
-\newpage
+\cumcmkeywords{\keywords}
+\end{cumcmabstract}
 
-% ==================== 目录 ====================
-\tableofcontents
-\newpage
-
-% ==================== 正文开始 ====================
-% --- 一、问题重述 (居中) ---
 \section{问题重述}
-该部分主要是用自己的话对问题进行总结，\textbf{关键是改写} 。字数在半页到一页左右 。
+用自己的语言提炼任务目标、已知条件和待求量，不逐句复制赛题。正文从摘要页后的下一页开始，全文不设置目录。
 
-% --- 二、问题分析 (居中)  ---
 \section{问题分析}
-问题分析起着承上启下的作用 。
+将每个子问题拆解为数据、决策变量、约束、目标和验证方式，并说明各子问题之间的数据流与逻辑关系。
 
-\subsection{问题一的分析} % 二级标题顶格
-分析过程要简明扼要，不需要放结论 。建议使用流程图列出思维过程 。
+\subsection{总体思路}
+本文先完成数据质量检查，再建立静态基准模型，随后加入不确定性与动态更新机制，最后通过基准对比、敏感性分析和极端情景测试检验结论。
 
-% --- 三、模型假设 (居中) ---
 \section{模型假设}
-\begin{itemize}
-    \item 假设题目给出的测量数据准确，无异常值 。
-    \item 整个系统温度恒定 。
-\end{itemize}
+\noindent 1) 赛题给出的原始数据真实有效；对缺失值和异常值的处理方法在正文中明确说明。
 
-% --- 四、符号说明 (居中)  ---
+\noindent 2) 单个决策周期内车辆平均速度保持不变；跨周期变化由滚动更新刻画。
+
+\noindent 3) 未显式建模的次要因素对核心结论不产生方向性改变。
+
 \section{符号说明}
-一般以三线表形式给出，包括符号、含义和单位 。建议用希腊字母 。
+表格采用三线表。较长说明列使用自动换行的居中列类型 \texttt{Y}；数值列可使用自动换行的右对齐列类型 \texttt{R}。
 
 \begin{table}[H]
-    \centering
-    \begin{tabular}{ccc}
-        \toprule
-        变量 & 说明 & 量纲 \\
-        \midrule
-        $t$ & 时间 & $s$  \\
-        $a_{ij}$ & 在$(i,j)$位置的人数 & 人  \\
-        \bottomrule
-    \end{tabular}
+  \centering
+  \caption{主要符号与定义}
+  \label{tab:symbols}
+  \begin{tabularx}{0.86\textwidth}{C{0.18\textwidth}Y R}
+    \toprule
+    符号 & 含义 & 单位 \\
+    \midrule
+    $x_{ijk}$ & 车辆 $k$ 是否由节点 $i$ 行驶至节点 $j$ & -- \\
+    $q_{ij}$  & 配送中心 $i$ 向需求点 $j$ 配送的物资量 & \si{\kilogram} \\
+    $t_j$     & 需求点 $j$ 的实际到达时间 & \si{\minute} \\
+    \bottomrule
+  \end{tabularx}
 \end{table}
 
-% --- 五、模型建立与求解 (居中) ---
 \section{模型建立与求解}
 \subsection{数据预处理}
-\subsection{描述性统计}
-\subsection{问题一模型的建立与求解}
-\subsubsection{模型选择与建立}
-解释清楚数据特点是什么样的，为什么要选择这个模型，这个模型是解决什么问题的，
-以及自己模型的推导过程
-\subsubsection{模型的求解}
-讲解你模型求解算法是什么，这个算法的优势是什么
-\subsubsection{模型结果}
+记录数据来源、清洗规则、缺失值比例和异常值判据。所有自主查阅的数据及处理脚本应同时收入支撑材料。
 
+\subsection{多目标模型}
+令运输成本、响应时间和服务公平性损失分别为 $f_1,f_2,f_3$，标准化后的综合目标为
+\begin{equation}
+  \min F=\max_{r\in\{1,2,3\}}\left\{w_r\frac{f_r-f_r^{\min}}{f_r^{\max}-f_r^{\min}}\right\},
+  \label{eq:objective}
+\end{equation}
+其中 $w_r\ge 0$ 且 $\sum_r w_r=1$。物资守恒约束可写为
+\begin{equation}
+  \sum_i q_{ij}\ge d_j,\qquad
+  \sum_j q_{ij}\le s_i.
+\end{equation}
 
+\subsection{求解流程}
+报告算法参数、终止条件、随机种子、运行环境与重复次数。结果表必须给出量纲、统计口径和必要的不确定性指标。
 
-% --- 六、模型检验 (居中)  ---
-\section{模型检验}
-包括稳定性分析、敏感性分析及误差分析。
+\begin{table}[H]
+  \centering
+  \caption{不同方案的示例结果}
+  \label{tab:results}
+  \begin{tabularx}{0.82\textwidth}{L C{0.18\textwidth} R R}
+    \toprule
+    方案 & 是否满足全部约束 & 总成本/万元 & 平均响应时间/min \\
+    \midrule
+    基准方案 & 是 & 128.40 & 47.6 \\
+    鲁棒方案 & 是 & 134.10 & 41.2 \\
+    动态方案 & 是 & 131.75 & 38.9 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
 
-% --- 七、模型优缺点评价 (居中)  ---
-\section{模型优缺点评价}
-优点说充分，缺点不回避 。
+\section{模型检验与敏感性分析}
+围绕输入误差、关键参数和极端情景分别开展检验，并说明结论在何种扰动范围内保持稳定。不能只报告“效果较好”，应给出可复核的量化证据。
 
+\section{模型评价与推广}
+总结模型的解释性、计算效率、数据依赖和适用边界。推广时明确哪些结构可复用，哪些参数必须重新估计。
 
-% ==================== 参考文献与附录 ====================
-\newpage
-\begin{thebibliography}{99}
-% 在此处添加参考文献条目
-\end{thebibliography}
+% 2026 强制要求：AI 工具使用声明必须置于参考文献之前，以下二选一。
+\CumcmAINotUsed
+% 若使用过 AI，请注释上一行并启用下一行，例如：
+% \CumcmAIUsed{语言润色、代码调试}
 
-\newpage
-\section*{附录}
-\addcontentsline{toc}{section}{附录}
-（在此处添加附录内容，如代码、表格等）
+\nocite{jiang2003modeling,sample2026}
+\bibliographystyle{gbt7714-numerical}
+\bibliography{references}
+
+\appendix
+\section{支撑材料文件列表}
+支撑材料应单独压缩为 RAR 或 ZIP，且不超过 \SI{20}{MB}。示例清单如下；提交前必须与实际压缩包逐项一致。
+\begin{longtable}{@{}p{0.08\textwidth}p{0.34\textwidth}p{0.46\textwidth}@{}}
+  \toprule
+  序号 & 文件路径 & 内容说明 \\
+  \midrule
+  1 & \texttt{code/example.py} & 可运行的示例程序 \\
+  2 & \texttt{data/processed.csv} & 自主获取并清洗后的数据（示例，按实际替换） \\
+  3 & \texttt{AI工具使用详情.pdf} & 仅在使用 AI 工具时提供 \\
+  \bottomrule
+\end{longtable}
+
+\section{完整源程序}
+建模所用的全部源程序必须完整、可运行，并与论文结果一致。此处演示从文件直接载入代码，避免论文附录与支撑材料中的代码版本漂移。
+\lstinputlisting[language=Python,basicstyle=\ttfamily\scriptsize,caption={示例程序}]{code/example.py}
 
 \end{document}

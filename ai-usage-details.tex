@@ -1,0 +1,48 @@
+% !TeX program = xelatex
+% 仅在竞赛中使用过 AI 工具时填写并编译；输出文件须命名为“AI工具使用详情.pdf”。
+\documentclass[zihao=-4,a4paper,UTF8,fontset=fandol]{ctexart}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{booktabs,tabularx,array,enumitem,hyperref}
+\hypersetup{hidelinks,pdfauthor={},pdftitle={AI工具使用详情}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\setlength{\parindent}{2em}
+\linespread{1.35}
+\pagestyle{plain}
+
+\begin{document}
+\thispagestyle{plain}
+\begin{center}
+  {\heiti\zihao{2}\bfseries AI工具使用详情}
+\end{center}
+
+\section{工具信息}
+\noindent
+\begin{tabularx}{\textwidth}{@{}p{0.20\textwidth}Y@{}}
+  \toprule
+  项目 & 填写内容 \\
+  \midrule
+  工具名称 & \textit{填写实际使用的产品或工具名称} \\
+  版本或型号 & \textit{填写实际版本、模型名称或可识别的型号} \\
+  使用日期 & \textit{YYYY-MM-DD 至 YYYY-MM-DD} \\
+  \bottomrule
+\end{tabularx}
+
+\section{具体使用目的和环节}
+逐项说明 AI 用于语言润色、代码调试、资料整理或其他环节；不得笼统写“辅助论文”。明确其输入、输出及对应论文位置。
+
+\section{主要提示方式与使用过程}
+说明主要提示策略与迭代过程，可附具有代表性的交互片段。不要包含参赛者姓名、学校或赛区信息。
+
+\section{采纳、人工修改与核验}
+除语言润色外，逐项记录 AI 输出是否采纳、由谁进行何种人工修改、采用何种数据或实验复核，以及最终结论是否发生变化。
+
+\section{人工核验清单}
+\begin{enumerate}[label=\arabic*)]
+  \item 核对公式推导、单位、边界条件和符号一致性；
+  \item 在独立环境中运行全部代码并复现论文表图；
+  \item 核验引用、数据来源和事实陈述；
+  \item 确认核心建模与分析由参赛队主导；
+  \item 确认论文声明与本详情文件一致。
+\end{enumerate}
+
+\end{document}

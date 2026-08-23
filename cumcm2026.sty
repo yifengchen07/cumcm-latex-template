@@ -1,0 +1,111 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{cumcm2026}[2026/08/23 v1.0 CUMCM 2026 paper style]
+
+\RequirePackage{geometry}
+\geometry{a4paper,left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm,headheight=15pt}
+
+\RequirePackage{amsmath,amssymb,mathtools}
+\RequirePackage{booktabs,array,tabularx,longtable,multirow}
+\RequirePackage{graphicx,float,caption,subcaption}
+\RequirePackage{enumitem}
+\RequirePackage{xcolor}
+\RequirePackage{listings}
+\RequirePackage{siunitx}
+\RequirePackage{microtype}
+\RequirePackage{titlesec}
+\RequirePackage{fancyhdr}
+\RequirePackage[sort&compress]{gbt7714}
+\RequirePackage[hidelinks,unicode]{hyperref}
+\RequirePackage[nameinlink,noabbrev]{cleveref}
+
+% tabularx: X-derived wrapping columns.
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+\definecolor{cumcmblue}{HTML}{1F4E79}
+\definecolor{cumcmgray}{HTML}{F2F4F7}
+\definecolor{codegreen}{HTML}{2E6B4E}
+
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+\linespread{1.35}
+\setlength{\abovedisplayskip}{8pt plus 2pt minus 2pt}
+\setlength{\belowdisplayskip}{8pt plus 2pt minus 2pt}
+\setlist{leftmargin=2em,labelsep=0.6em,itemsep=0.25em,topsep=0.4em,parsep=0pt}
+
+\titleformat{\section}{\centering\heiti\zihao{3}\bfseries}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\heiti\zihao{4}\bfseries}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}{\heiti\zihao{-4}\bfseries}{\thesubsubsection}{0.8em}{}
+\titlespacing*{\section}{0pt}{1.2em}{0.8em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.5em}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.4em}
+
+\captionsetup{font=small,labelsep=quad,skip=6pt}
+\captionsetup[table]{position=top}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+\makeatletter
+\renewcommand{\maketitle}{%
+  \thispagestyle{plain}%
+  \setcounter{page}{1}%
+  \begin{center}
+    \vspace*{-0.6em}
+    {\heiti\zihao{2}\bfseries \@title\par}
+    \vspace{1.1em}
+    {\heiti\zihao{3}\bfseries 摘\quad 要\par}
+  \end{center}
+}
+\AtBeginDocument{\hypersetup{pdftitle={\@title},pdfauthor={},pdfsubject={2026 CUMCM参赛论文}}}
+\makeatother
+
+\newenvironment{cumcmabstract}
+  {\begingroup\zihao{-4}\setlength{\parindent}{2em}}
+  {\par\endgroup\clearpage}
+
+\newcommand{\cumcmkeywords}[1]{%
+  \par\vspace{0.8em}\noindent{\heiti\bfseries 关键词：}#1
+}
+
+\newcommand{\CumcmAINotUsed}{%
+  \section*{AI工具使用声明}
+  本参赛队在竞赛过程中未使用任何AI工具。
+}
+
+\newcommand{\CumcmAIUsed}[1]{%
+  \section*{AI工具使用声明}
+  本参赛队在竞赛过程中使用了AI工具，主要用于#1，详细使用情况见支撑材料。
+}
+
+\lstdefinestyle{cumcmcode}{
+  basicstyle=\ttfamily\small,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=8pt,
+  frame=single,
+  rulecolor=\color{black!25},
+  backgroundcolor=\color{cumcmgray},
+  keywordstyle=\color{cumcmblue}\bfseries,
+  commentstyle=\color{codegreen},
+  stringstyle=\color{orange!70!black},
+  breaklines=true,
+  breakatwhitespace=false,
+  showstringspaces=false,
+  columns=fullflexible,
+  keepspaces=true
+}
+\lstset{style=cumcmcode}
+
+\sisetup{detect-all,group-minimum-digits=4}
+
+\endinput
