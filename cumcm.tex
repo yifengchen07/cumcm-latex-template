@@ -144,8 +144,17 @@
 \bibliographystyle{gbt7714-numerical}
 \bibliography{references}
 
+\newpage
 \appendix
+% 附录一级标题格式(仅针对附录更改，不要改sty文件)
+\titleformat{\section}
+  {\centering\heiti\zihao{3}\bfseries}
+  {附录~\thesection}
+  {0.8em}
+  {}
+
 \section{支撑材料文件列表}
+
 支撑材料应单独压缩为 RAR 或 ZIP，且不超过 \SI{20}{MB}。示例清单如下；提交前必须与实际压缩包逐项一致。
 \begin{longtable}{@{}p{0.08\textwidth}p{0.34\textwidth}p{0.46\textwidth}@{}}
   \toprule
